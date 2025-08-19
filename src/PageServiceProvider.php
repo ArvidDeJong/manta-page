@@ -44,6 +44,7 @@ class PageServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 \Darvis\MantaPage\Console\Commands\InstallCommand::class,
+                \Darvis\MantaPage\Console\Commands\SeedPageCommand::class,
             ]);
         }
 

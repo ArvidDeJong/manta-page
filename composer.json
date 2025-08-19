@@ -24,7 +24,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Darvis\\MantaPage\\Tests\\": "tests/"
+            "Tests\\": "tests/"
         }
     },
     "scripts": {

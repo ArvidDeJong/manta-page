@@ -11,7 +11,7 @@ trait PageTrait
     public function __construct()
     {
         $this->route_name = 'page';
-        $this->route_list = route($this->route_name . '.list');
+        $this->route_list = route('page.list');
         $settings = MantaModule::where('name', 'page')->first()->toArray();
 
         $this->config = $settings;
