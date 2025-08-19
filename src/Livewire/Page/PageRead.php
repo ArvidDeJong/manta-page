@@ -30,9 +30,9 @@ class PageRead extends Component
         if ($page) {
             $this->id = $page->id;
         }
-
         $this->getLocaleInfo();
         $this->tablistShow = $this->locale;
+
         $this->getTablist();
         $this->getBreadcrumb('read');
     }

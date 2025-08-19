@@ -59,6 +59,7 @@ class PageCreate extends Component
 
     public function save()
     {
+
         $this->validate();
 
         $row = $this->only(

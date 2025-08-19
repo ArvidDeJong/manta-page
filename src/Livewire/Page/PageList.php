@@ -23,12 +23,14 @@ class PageList extends Component
 
     public function mount()
     {
+
         $this->getBreadcrumb();
         $this->sortBy = 'homepageSort';
     }
 
     public function render()
     {
+
         $this->trashed = count(Page::whereNull('pid')->onlyTrashed()->get());
 
         $obj = Page::whereNull('pid');

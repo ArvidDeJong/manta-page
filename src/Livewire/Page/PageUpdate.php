@@ -96,7 +96,7 @@ class PageUpdate extends Component
         $row['updated_by'] = auth('staff')->user()->name;
         Page::where('id', $this->id)->update($row);
 
-        // return redirect()->to(route($this->route_name . '.list'));
+
         Flux::toast('Opgeslagen', duration: 1000, variant: 'success');
     }
 }

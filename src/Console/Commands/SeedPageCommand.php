@@ -15,7 +15,8 @@ class SeedPageCommand extends Command
     protected $signature = 'manta-page:seed 
                             {--force : Force seeding even if pages already exist}
                             {--fresh : Delete existing pages before seeding}
-                            {--with-navigation : Also seed navigation items for page management}';
+                            {--with-navigation : Also seed navigation items for page management}
+                            {--navigation-only : Only seed navigation items, skip page seeding}';
 
     /**
      * The console command description.
@@ -31,6 +32,12 @@ class SeedPageCommand extends Command
     {
         $this->info('🌱 Seeding Manta Pages...');
         $this->newLine();
+
+        // Handle navigation-only option
+        if ($this->option('navigation-only')) {
+            $this->seedPageNavigation();
+            return self::SUCCESS;
+        }
 
         // Check if pages already exist
         $existingCount = Page::count();
@@ -74,7 +81,7 @@ class SeedPageCommand extends Command
 
         // Seed navigation if requested
         if ($this->option('with-navigation')) {
-            $this->seedNavigation();
+            $this->seedPageNavigation();
         }
 
         $this->newLine();

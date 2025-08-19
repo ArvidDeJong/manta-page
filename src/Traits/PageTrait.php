@@ -4,20 +4,28 @@ namespace Darvis\MantaPage\Traits;
 
 use Darvis\MantaPage\Models\Page;
 use Illuminate\Database\Eloquent\Builder;
-use Manta\FluxCMS\Models\MantaModule;
+use Manta\FluxCMS\Services\ModuleSettingsService;
 
 trait PageTrait
 {
     public function __construct()
     {
-        $this->route_name = 'page';
-        $this->route_list = route('page.list');
-        $settings = MantaModule::where('name', 'page')->first()->toArray();
+        $this->module_routes = [
+            'name' => 'page',
+            'list' => 'page.list',
+            'create' => 'page.create',
+            'update' => 'page.update',
+            'read' => 'page.read',
+            'upload' => 'page.upload',
+            'settings' => 'page.settings',
+            'maps' => null,
+        ];
 
+        $settings = ModuleSettingsService::ensureModuleSettings('page', 'darvis/manta-page');
         $this->config = $settings;
 
-        $this->fields = $settings['fields'];
-        $this->tab_title = isset($settings['tab_title']) ? $settings['tab_title'] : null;
+        $this->fields = $settings['fields'] ?? [];
+        $this->tab_title = $settings['tab_title'] ?? null;
         $this->moduleClass = 'Darvis\MantaPage\Models\Page';
     }
 
