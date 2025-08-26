@@ -47,10 +47,5 @@
                 "Darvis\\MantaPage\\PageServiceProvider"
             ]
         }
-    },
-    "minimum-stability": "stable",
-    "prefer-stable": true,
-    "config": {
-        "sort-packages": true
     }
 }
