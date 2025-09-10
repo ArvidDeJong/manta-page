@@ -27,6 +27,7 @@ trait PageTrait
         $this->fields = $settings['fields'] ?? [];
         $this->tab_title = $settings['tab_title'] ?? null;
         $this->moduleClass = 'Darvis\MantaPage\Models\Page';
+        $this->openaiImagePossible = false;
     }
 
     public ?Page $item = null;
@@ -105,7 +106,7 @@ trait PageTrait
             if ($this->item) {
                 $return['slug'] = $this->fields['slug']['required'] == true ? 'required|string|max:255|unique:manta_pages,slug,' . $this->item->id : 'nullable|string|max:255|unique:manta_pages,slug,' . $this->item->id;
             } else {
-                $return['slug'] = $this->fields['slug']['required'] == true ? 'required|string|max:255|unique:manta_pages,slug' : 'nullable|string|max:255|unique:manta_pages,slug';
+                $return['slug'] = 'nullable|string|max:255|unique:manta_pages,slug';
             }
         }
 

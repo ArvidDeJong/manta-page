@@ -8,6 +8,7 @@ use Darvis\MantaPage\Models\Page;
 use Manta\FluxCMS\Traits\MantaTrait;
 use Darvis\MantaPage\Traits\PageTrait;
 use Livewire\Attributes\Layout;
+use Manta\FluxCMS\Models\Upload;
 
 #[Layout('manta-cms::layouts.app')]
 class PageUpdate extends Component
@@ -58,7 +59,8 @@ class PageUpdate extends Component
 
     public function render()
     {
-        return view('manta-cms::livewire.default.manta-default-update')->layoutData(['title' => $this->config['module_name']['single'] . ' aanpassen']);
+        $uploads = Upload::where('model_id', 'openai')->get();
+        return view('manta-cms::livewire.default.manta-default-update', compact('uploads'))->layoutData(['title' => $this->config['module_name']['single'] . ' aanpassen']);
     }
 
     public function save()

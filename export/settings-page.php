@@ -199,7 +199,7 @@ return [
         ],
         "content" => [
             "active" => true,
-            "type" => "tinymce",
+            "type" => "editor",
             "title" => "Bericht",
             "read" => true,
             "required" => false,

@@ -40,6 +40,9 @@
             @foreach ($items as $item)
                 <flux:table.row data-id="{{ $item->id }}">
                     <flux:table.cell>
+                        {{ $item->id }}
+                    </flux:table.cell>
+                    <flux:table.cell>
                         <flux:avatar size="xs" src="{{ $item->customer_avatar }}" />
                     </flux:table.cell>
                     <flux:table.cell>

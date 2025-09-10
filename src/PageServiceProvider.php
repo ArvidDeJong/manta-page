@@ -24,6 +24,11 @@ class PageServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Registreer Page alias voor gebruik in Blade templates
+        if (!class_exists('Page')) {
+            class_alias('Darvis\MantaPage\Models\Page', 'Page');
+        }
+        
         // Publiceer configuratie
         $this->publishes([
             __DIR__ . '/../config/manta-page.php' => config_path('manta-page.php'),

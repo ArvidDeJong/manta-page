@@ -9,7 +9,10 @@ use Livewire\Component;
 use Faker\Factory as Faker;
 use Illuminate\Support\Str;
 use Darvis\MantaPage\Traits\PageTrait;
+use Flux\Flux;
 use Livewire\Attributes\Layout;
+use Manta\FluxCMS\Models\Upload;
+use Manta\FluxCMS\Services\MantaOpenai;
 
 #[Layout('manta-cms::layouts.app')]
 class PageCreate extends Component
@@ -50,11 +53,14 @@ class PageCreate extends Component
         $this->tablistShow = $this->locale;
         $this->getTablist();
         $this->getBreadcrumb('create');
+
+        $this->openaiSubject = 'Maak een website pagina over: ';
     }
 
     public function render()
     {
-        return view('manta-cms::livewire.default.manta-default-create')->layoutData(['title' => $this->config['module_name']['single'] . ' toevoegen']);
+        $uploads = Upload::where('model_id', 'openai')->get();
+        return view('manta-cms::livewire.default.manta-default-create', compact('uploads'))->layoutData(['title' => $this->config['module_name']['single'] . ' toevoegen']);
     }
 
     public function save()
@@ -90,11 +96,47 @@ class PageCreate extends Component
             'option_3',
             'option_4',
         );
+
         $row['created_by'] = auth('staff')->user()->name;
         $row['host'] = request()->host();
         $row['slug'] = $this->slug ? $this->slug : Str::of($this->title)->slug('-');
         $page = Page::create($row);
 
         return $this->redirect(route('page.read', ['page' => $page]));
+    }
+
+    public function getOpenaiResult()
+    {
+        Flux::modals()->close();
+        $ai = app(MantaOpenai::class);
+
+        // geeft een directe URL terug naar de afbeelding
+
+        $result = $ai->generate(
+            $this->openaiSubject . ' ' . $this->openaiDescription,
+            [
+                'title' => 'Korte titel',
+                'description' => 'Korte beschrijving',
+                'excerpt' => 'Samenvatting',
+                'content' => 'Uitgebreide marketingtekst in HTML',
+            ]
+        );
+
+        $this->title = $result['title'];
+        $this->description = $result['description'];
+        $this->excerpt = $result['excerpt'];
+        $this->content = $result['content'];
+        //
+        $this->seo_title = $result['title'];
+        $this->seo_description = $result['description'];
+
+        if ($this->openaiImageGenerate) {
+            $ai->generateImage(
+                $this->openaiSubject . ' ' . $this->openaiDescription,
+                Page::class,
+                'openai',
+                '1024x1024'
+            );
+        }
     }
 }
