@@ -136,6 +136,9 @@ class Page extends Model
     public static function getMantaLink($id)
     {
         $page = Page::find($id);
+        if (!$page) {
+            return '#link-' . $id;
+        }
         echo route('website.page', ['slug' => $page->slug]);
     }
 }
