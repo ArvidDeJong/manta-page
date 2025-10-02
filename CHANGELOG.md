@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Zorgt ervoor dat `getMantaLink()` een fallback link retourneert wanneer de pagina niet bestaat.
+- Ensures `getMantaLink()` returns a fallback link when the page does not exist.
 
 ## [1.1.1] - 2025-09-10
 
